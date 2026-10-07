@@ -12,18 +12,34 @@ const lovePhrases = [
 ];
 let nextLovePhrase = 0;
 
-document.addEventListener("click", (event) => {
+const showLovePhrase = (x, y) => {
   const phrase = document.createElement("span");
   const inset = 24;
 
   phrase.className = "love-pop";
   phrase.setAttribute("aria-hidden", "true");
   phrase.textContent = lovePhrases[nextLovePhrase];
-  phrase.style.left = `${Math.min(Math.max(event.clientX, inset), window.innerWidth - inset)}px`;
-  phrase.style.top = `${Math.min(Math.max(event.clientY, inset), window.innerHeight - inset)}px`;
+  phrase.style.left = `${Math.min(Math.max(x, inset), window.innerWidth - inset)}px`;
+  phrase.style.top = `${Math.min(Math.max(y, inset), window.innerHeight - inset)}px`;
   phrase.style.setProperty("--phrase-tilt", `${Math.random() * 12 - 6}deg`);
   document.body.appendChild(phrase);
 
   nextLovePhrase = (nextLovePhrase + 1) % lovePhrases.length;
   window.setTimeout(() => phrase.remove(), 2400);
-});
+};
+
+if ("PointerEvent" in window) {
+  document.addEventListener("pointerdown", (event) => {
+    showLovePhrase(event.clientX, event.clientY);
+  }, { passive: true });
+} else {
+  document.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    if (touch) {
+      showLovePhrase(touch.clientX, touch.clientY);
+    }
+  }, { passive: true });
+  document.addEventListener("click", (event) => {
+    showLovePhrase(event.clientX, event.clientY);
+  });
+}
