@@ -1640,6 +1640,31 @@ body {
   --petal-shadow: #65005e;
   background-image: linear-gradient(145deg, var(--petal-light), var(--petal-color) 58%, var(--petal-shadow));
 }
+.love-pop {
+  position: fixed;
+  z-index: 50;
+  color: #ffe5ef;
+  font: italic 600 clamp(1.1rem, 3vw, 1.65rem)/1.2 Georgia, "Times New Roman", serif;
+  text-align: center;
+  text-shadow: 0 0 0.5rem rgba(255, 210, 230, 0.9), 0 0 1.4rem rgba(255, 73, 151, 0.8);
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -50%) rotate(var(--phrase-tilt));
+  animation: love-pop-rise 2.4s ease-out forwards;
+}
+@keyframes love-pop-rise {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0.5rem) scale(0.75) rotate(var(--phrase-tilt));
+  }
+  15%, 65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -5rem) scale(1.08) rotate(var(--phrase-tilt));
+  }
+}
 @keyframes petal-fall {
   0% {
     transform: translate3d(0, -12vh, 0) rotate(0deg);
